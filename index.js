@@ -4,7 +4,7 @@ var session = require('express-session');
 const bodyParser = require("body-parser");
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
-
+const cors = require("cors");
 async function main(){
 
 const app = express();
@@ -49,7 +49,13 @@ app.use(
     })
 );
 app.use(bodyParser.json());
-
+app.use(
+	  	cors({
+			    origin: ["http://localhost:3000",'https://elegant-tank-top-fish.cyclic.app/'], 
+		    	methods: [ "GET", "POST","DELETE" ],
+		    	credentials: true,
+		  	})
+		); 
 
 app.get('/', (req, res) => {
     res.json({
