@@ -51,7 +51,7 @@ app.use(
 app.use(bodyParser.json());
 app.use(
 	  	cors({
-			    origin: ["http://localhost:3000",'https://elegant-tank-top-fish.cyclic.app/'], 
+			    origin: ["http://localhost:3000",'https://nybulajobsbackend.cyclic.app/'], 
 		    	methods: [ "GET", "POST","DELETE" ],
 		    	credentials: true,
 		  	})
@@ -64,6 +64,7 @@ app.get('/', (req, res) => {
 });
 
 require('./routes/authroute')(app);
+require('./routes/jobsroute')(app);
 
 let port = process.env.PORT || 8000
 			app.listen(port);

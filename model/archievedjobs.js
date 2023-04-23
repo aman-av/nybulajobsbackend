@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const {Schema} =  mongoose;
 
-const jobs = new Schema({
+const archievedjobs = new Schema({
     title:{
         type:String
     },
@@ -25,4 +25,4 @@ const jobs = new Schema({
     }
 });
 
-mongoose.model('jobs',jobs);
+mongoose.model('archievedjobs',archievedjobs);

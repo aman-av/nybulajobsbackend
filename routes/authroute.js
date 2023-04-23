@@ -9,6 +9,11 @@ app.get("/", (req, res) => {
     hello: "hi!"
   });
 });
+  
+  app.get("/getuser", (req, res) => {
+    console.log(req.session.user)
+    res.json(req.session.user);
+});
 
 app.post('/login', async (req, res) => {
     const email=req.body.email
@@ -17,10 +22,14 @@ app.post('/login', async (req, res) => {
    const user = await User.findOne({
      email: email
    });
-  
-  let auth =await bcrypt.compareSync(req.body.password, user["password"]);
-    if(auth) {
-        var redir = { redirect: "/" , message:"login successfull" , user:user };	
+  let auth = false;
+  if(user)
+  auth =await bcrypt.compareSync(req.body.password, user["password"]);
+  if (auth) {
+    delete user['password'];
+      var redir = { redirect: "/", message: "login successfull", user: user };	
+    req.session.user = user;
+    console.log(req.session.user);
         return res.json(redir);
   }
   else return res.status(401).send({'error':'email or password incorrect'})
@@ -68,6 +77,7 @@ app.post('/signup', async(req, res)=>{
             name:name
             
       }
+      if(type!='terraformer')
       req.session.user = sessionuser;
 
       var redir = { redirect: "/", message:"New user Created", user: newUser};
