@@ -32,14 +32,18 @@ module.exports = async(app) => {
 
     app.get('/jobs/alljobs', async (req, res) => {
         const response = await Jobs.find({});
-        console.log(response);
+        const dict = {}
+        response.map(item => {
+            dict[item._id]=item
+        })
+        console.log(dict);
 
 //         await Jobsorder.updateOne( {key:'7984dsfdsf'}, {
 //         $pullAll: { listorder: newjobid }
 // });
 
 
-        res.send(response);
+        res.send(dict);
     });
 
     app.get('/jobs/getorder', async (req, res) => {
