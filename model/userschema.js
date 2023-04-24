@@ -13,6 +13,9 @@ const users = new Schema({
     },
     type:{
         type:String
+    },
+    appliedjobs: {
+        type:Array
     }
 });
 

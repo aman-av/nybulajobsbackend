@@ -62,7 +62,8 @@ app.post('/signup', async(req, res)=>{
           email: req.body.email,
           password: hashedPassword,
             type:type,
-            name:name
+            name: name,
+            appliedjobs:[]
             
       });
 

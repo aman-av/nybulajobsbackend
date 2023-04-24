@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 require("../model/jobschema");
 require('../model/archievedjobs');
 require('../model/jobsorder');
+require('../model/userschema');
+const User = mongoose.model('users');
 const Archivedjobs = mongoose.model('archievedjobs')
 const Jobsorder = mongoose.model('jobsorders');
 const Jobs = mongoose.model("jobs");
@@ -28,7 +30,7 @@ module.exports = async(app) => {
 
         await Jobsorder.updateOne(
             {key:'7984dsfdsf'}, 
-            { $push: { listorder: newjobid } }
+            { $addToSet: { listorder: newjobid } }
         );
         res.send(response);
     });
@@ -55,7 +57,7 @@ module.exports = async(app) => {
             else if (diffDays < 0) {
                 const func = async () => {
                     
-                    const resp = await Jobs.findOneAndDelete({ _id: ObjectId(item._id) });
+                    const resp = await Jobs.findOneAndDelete({ _id: new ObjectId(item._id) });
 
                     const user = new Archivedjobs(resp);
 
@@ -90,5 +92,26 @@ module.exports = async(app) => {
                 $set: { "listorder": req.body }
             })
         res.send(response);
+    });
+
+    app.post('/jobs/jobsapplied', async (req, res) => {
+        console.log(new ObjectId(req.body.jobid))
+        const res1 = await Jobs.findOneAndUpdate({ _id:new ObjectId(req.body.jobid) },
+            { $push: { applicants: req.body.userid } }
+        )
+        console.log(res1);
+        console.log(new ObjectId(req.body.userid))
+
+        const res2 = await User.findOneAndUpdate({ _id: new ObjectId(req.body.userid) },
+            { $push: { appliedjobs: req.body.jobid } });
+        console.log(res2);
+        res.send('ok')
+
+    });
+
+    app.post('/jobs/getjobsapplied', async (req, res) => {
+        const resp = await User.findOne({ _id:new ObjectId(req.body.userid) });
+        res.send(resp.appliedjobs);
+
     });
 }
