@@ -22,6 +22,9 @@ User schema for keeping user detail
     },
     type:{
         type:String
+    },
+      appliedjobs: {
+        type:Array
     }
 
     i am not using any external tool to handle authentication instead i am doing it manually and storing the sync hash of the password for security purpose.
@@ -61,6 +64,9 @@ authroutes.js has all the routes for authentication process which includes login
 /login , /logout ,/signup
 
 jobroutes.js has all the routes for job related apis
-/jobs/createnew 
-/jobs/getall
-/jobs/applicants
+/jobs/createnew - creating new job
+/jobs/alljobs - send all jobs to client and updating the db for the archieved job and also adding color tag to the job
+/jobs/getorder - to retrive the jobs in order for viewing in the dashboard
+/jobs/updateorder - to save the updated order of the job posting
+/jobs/jobsapplied - add the job in the user applied job list and jobs db applied array to keep the track of jobs applied by user and who all have applied for a particular job
+/jobs/getjobsapplied - return an array with job id all the jobs user has applied
