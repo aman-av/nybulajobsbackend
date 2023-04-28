@@ -51,7 +51,7 @@ app.use(
 app.use(bodyParser.json());
 app.use(
 	  	cors({
-			    origin: ["http://localhost:3000",'https://nybulajobsbackend.cyclic.app/'], 
+			    origin: ["http://localhost:3000",'https://nybulajobs.netlify.app/'], 
 		    	methods: [ "GET", "POST","DELETE" ],
 		    	credentials: true,
 		  	})
