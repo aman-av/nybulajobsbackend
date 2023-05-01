@@ -56,7 +56,7 @@ module.exports = async(app) => {
                 dict[item._id].color = 'red';
             else if (diffDays < 0) {
                 const func = async () => {
-                    
+                    delete dict[item._id];
                     const resp = await Jobs.findOneAndDelete({ _id: new ObjectId(item._id) });
 
                     const user = new Archivedjobs(resp);
